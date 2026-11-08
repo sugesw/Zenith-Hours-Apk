@@ -27,10 +27,7 @@ jobs:
           node setup-deps.js
           npm install --legacy-peer-deps
       - run: cd nodejs && npm install --omit=dev --no-audit
+      - run: find nodejs/node_modules -name "*.gz" -delete
       - run: cp -r nodejs www/nodejs
       - run: npx cap add android
-      - run: python3 patch-android.py
-      - run: npx cap sync android
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v4
-        with: { name: ZenithHours-apk, path: android/app/build/outputs/apk/debug/app-debug.apk }
+      - run:
